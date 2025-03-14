@@ -30,6 +30,9 @@ public class Encrypter {
                     keyCharIndex = 0;
                 }
                 int shift = ALPHABET.indexOf(c) + ALPHABET.indexOf(keyChars[keyCharIndex]) + 1;
+                if(shift >= ALPHABET.length()){
+                    shift -= ALPHABET.length();
+                }
                 char cipherChar = ALPHABET.charAt(shift);
                 sb.append(cipherChar);
 
