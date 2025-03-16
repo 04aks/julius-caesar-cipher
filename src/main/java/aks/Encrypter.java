@@ -43,4 +43,41 @@ public class Encrypter {
 
         return list;
     }
+
+    List<String> decryptWords(String cipher, String key){
+
+        // List of encrypted words
+        List<String> cipherList = new ArrayList<>();
+        for(String word : cipher.split(",")){
+            if(word.length() < key.length()) throw new ArrayIndexOutOfBoundsException("Encryption key must NOT be longer than the Plain Text (for now at least)");
+            cipherList.add(word.toLowerCase());
+        }
+
+        List<String> decryptedWords = new ArrayList<>();
+
+        // decrypt
+        for(String word : cipher.split(",")){
+            int keyIndex = 0;
+            StringBuilder decryptedWord = new StringBuilder();
+            char[] wordChars = word.toCharArray();
+
+            for(char c : wordChars){
+
+                if(keyIndex >= key.length()){
+                    keyIndex = 0;
+                }
+                int shift = ALPHABET.indexOf(c) - (ALPHABET.indexOf(key.charAt(keyIndex)) + 1);
+                if(shift < 0){
+                    shift = ALPHABET.length() + shift;
+                }
+                keyIndex++;
+                
+                decryptedWord.append(ALPHABET.charAt(shift));
+            }
+
+            decryptedWords.add(decryptedWord.toString());
+        }
+
+        return decryptedWords;
+    }
 }
